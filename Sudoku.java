@@ -1,4 +1,15 @@
-package sudoku2;
+/*	Authors:	Group 18
+ * 		-Micah Knerr
+ * 		-Ryan Farrell
+ * 	Class: COSC1320, Spring 2016
+ * 	Project: Sudoku
+ * 	Program: Sudoku.java
+ * 	Description:
+ * 		Class which organizes the start and run sequence as well as contains 
+ * 			constants which define the type of board and appearance of the Sudoku board
+ */
+
+package sudokuGame;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -9,20 +20,18 @@ import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.BorderLayout;
 
-/**Class which organizes the start and run sequence as well as contains constants which define the type of board and appearance of the Sudoku board
- * 
- *
- */
 public class Sudoku extends JPanel 
 {	
 	private static final long serialVersionUID = 1L;
 	
 	public static final int ROWS_AND_COLUMNS = 9;
 	public static final int ROWS_OR_COLUMNS_IN_A_BOX = 3;
-	public static final int LINE_WIDTH = 5;
 	public static final int BORDER_WIDTH = 100;
 	
+	public static int LINE_WIDTH = 5;
+	
 	private Game gameBoard;
+	private MenuBar menuBar;
 	private KeyboardInput keyboard;
 	
 	/**Creates an instance of the Sudoku game by initializing and setting size, default close operation and visibility of a JFrame 
@@ -31,8 +40,9 @@ public class Sudoku extends JPanel
 	{
 		JFrame window = new JFrame("Sudoku Game");
 		gameBoard = new Game();
+		menuBar = new MenuBar(gameBoard);
 		keyboard = new KeyboardInput();
-		window.setSize(800,800);
+		window.setSize(800,857);
 		window.setVisible(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -43,6 +53,8 @@ public class Sudoku extends JPanel
 		setLayout(new BorderLayout());
 		
 		add(gameBoard,BorderLayout.CENTER);
+		window.setJMenuBar(menuBar);
+		window.setResizable(false);
 	}
 	
 	/**Creates the grid of the Sudoku game
@@ -55,7 +67,7 @@ public class Sudoku extends JPanel
 		drawGrid(g);
 		gameBoard.repaint();
 	}
-	
+
 	/**Recursive function to draw all horizontal lines separating each square
 	 * 
 	 * @param g Graphics used to draw
@@ -172,7 +184,7 @@ public class Sudoku extends JPanel
 			else if(code == KeyEvent.VK_BACK_SPACE)
 				gameBoard.changeValue(0);
 			else if(code == KeyEvent.VK_C)
-				gameBoard.toggleCheck();
+				menuBar.toggleCheck();
 			e.consume();
 		}
 	}
